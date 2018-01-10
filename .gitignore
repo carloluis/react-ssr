@@ -2,7 +2,8 @@
 
 # compiled output
 /dist
-/build
+server.js
+server.js.map
 
 # dependencies
 /node_modules/
