@@ -12,14 +12,16 @@ const PATHS = {
 const clientConfig = {
 	context: __dirname,
 	entry: {
-		app: [PATHS.client]
+		app: [PATHS.client],
+		vendor: ['react', 'react-dom']
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
 	output: {
 		path: PATHS.dist,
-		filename: '[name].js'
+		filename: '[name].js',
+		publicPath: '/'
 	},
 	module: {
 		rules: [
@@ -68,9 +70,16 @@ const clientConfig = {
 	plugins: [
 		new ExtractTextPlugin({
 			filename: '[name].css'
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			filename: 'vendor.js'
 		})
 	],
-	devtool: 'source-map'
+	devtool: 'source-map',
+	stats: {
+		children: false
+	}
 };
 
 const serverConfig = {

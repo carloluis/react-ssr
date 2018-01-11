@@ -17,8 +17,10 @@ app.get('*', (req, res) => {
 	<!DOCTYPE html>
 	<html>
 	<head>
+		<meta charset="utf-8">
 		<title>React SSR</title>
 		<link rel="stylesheet" href="/app.css">
+		<script src="/vendor.js" defer></script>
 		<script src="/app.js" defer></script>
 	</head>
 	<body>
