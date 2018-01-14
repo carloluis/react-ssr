@@ -74,12 +74,28 @@ const clientConfig = {
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
 			filename: 'vendor.js'
-		})
+		}),
+		new webpack.optimize.ModuleConcatenationPlugin(),
+		new webpack.NamedModulesPlugin()
 	],
 	devtool: 'source-map',
 	stats: {
-		children: false
+		all: false,
+		assets: true,
+		excludeAssets: /.map$/,
+		children: true,
+		timings: true,
+		chunks: false,
+		entrypoints: false,
+		env: true,
+		hash: true,
+		version: true
+	},
+	watchOptions: {
+		aggregateTimeout: 500,
+		ignored: /node_modules/
 	}
+	// watch: true
 };
 
 const serverConfig = {
@@ -100,7 +116,7 @@ const serverConfig = {
 		filename: '[name].js',
 		libraryTarget: 'commonjs2'
 	},
-	devtool: 'cheap-module-source-map',
+	// devtool: 'cheap-module-source-map',
 	module: {
 		rules: [
 			{
@@ -145,6 +161,16 @@ const serverConfig = {
 				]
 			}
 		]
+	},
+	// stats: 'minimal'
+	stats: {
+		all: false,
+		assets: true,
+		chunks: true,
+		entrypoints: true,
+		timings: true,
+		env: true,
+		hash: true
 	}
 };
 
