@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
+const fs = require('fs');
 
 const PATHS = {
 	client: path.join(__dirname, 'src/client'),
@@ -76,13 +77,28 @@ const clientConfig = {
 			filename: 'vendor.js'
 		}),
 		new webpack.optimize.ModuleConcatenationPlugin(),
-		new webpack.NamedModulesPlugin()
+		new webpack.NamedModulesPlugin(),
+		function() {
+			this.plugin('done', stats => {
+				fs.writeFileSync(
+					path.join(PATHS.dist, 'webpack-stats.json'),
+					JSON.stringify(
+						stats.toJson({
+							all: false,
+							assets: true,
+							excludeAssets: /.map$/,
+							hash: true,
+							timings: true
+						})
+					)
+				);
+			});
+		}
 	],
 	devtool: 'source-map',
 	stats: {
 		all: false,
 		assets: true,
-		excludeAssets: /.map$/,
 		children: true,
 		timings: true,
 		chunks: false,
@@ -162,12 +178,11 @@ const serverConfig = {
 			}
 		]
 	},
-	// stats: 'minimal'
 	stats: {
 		all: false,
 		assets: true,
 		chunks: true,
-		entrypoints: true,
+		excludeAssets: /.map$/,
 		timings: true,
 		env: true,
 		hash: true
