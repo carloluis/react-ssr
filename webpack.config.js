@@ -103,9 +103,14 @@ const clientConfig = {
 		timings: true,
 		chunks: false,
 		entrypoints: false,
+		excludeAssets: /.map$/,
 		env: true,
 		hash: true,
 		version: true
+	},
+	performance: {
+		hints: 'warning',
+		maxAssetSize: 100000
 	},
 	watchOptions: {
 		aggregateTimeout: 500,
@@ -132,7 +137,6 @@ const serverConfig = {
 		filename: '[name].js',
 		libraryTarget: 'commonjs2'
 	},
-	// devtool: 'cheap-module-source-map',
 	module: {
 		rules: [
 			{
@@ -178,11 +182,11 @@ const serverConfig = {
 			}
 		]
 	},
+	// devtool: 'cheap-module-source-map',
 	stats: {
 		all: false,
 		assets: true,
 		chunks: true,
-		excludeAssets: /.map$/,
 		timings: true,
 		env: true,
 		hash: true
