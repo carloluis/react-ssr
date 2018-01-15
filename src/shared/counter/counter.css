@@ -1,0 +1,10 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 4rem;
+}
+
+.container span {
+	margin: 0 8px;
+}

@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import App from '../shared/app/App';
+import App from '../shared';
 
 const DIST_DIR = path.join(__dirname, '../../dist');
 const PORT = process.env.PORT || 3000;
