@@ -1,0 +1,30 @@
+{
+	"presets": [
+		[
+			"env",
+			{
+				"targets": {
+					"browsers": ["last 2 versions"],
+					"uglify": true
+				}
+			}
+		],
+		"react"
+	],
+	"env": {
+		"server": {
+			"presets": [
+				[
+					"env",
+					{
+						"targets": {
+							"node": "current"
+						},
+						"modules": "commonjs"
+					}
+				],
+				"react"
+			]
+		}
+	}
+}

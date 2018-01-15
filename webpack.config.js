@@ -149,9 +149,7 @@ const serverConfig = {
 							'env',
 							{
 								targets: {
-									browsers: ['last 2 versions'],
-									node: 'current',
-									uglify: true
+									node: 'current'
 								},
 								modules: 'commonjs'
 							}
