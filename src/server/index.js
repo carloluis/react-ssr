@@ -11,6 +11,26 @@ const app = express();
 
 app.use(express.static(DIST_DIR));
 
+app.get('/stream', (req, res) => {
+	res.write(`
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="utf-8">
+		<title>React SSR Stream</title>
+		<link rel="stylesheet" href="/app.css">
+		<script src="/vendor.js" defer></script>
+		<script src="/app.js" defer></script>
+	</head>`);
+	res.write('<div id="app">');
+	const stream = ReactDOM.renderToNodeStream(<App />);
+	stream.pipe(res, { end: false });
+	stream.on('end', () => {
+		res.write(`</div></body></html>`);
+		res.end();
+	});
+});
+
 app.get('*', (req, res) => {
 	res.set('content-type', 'text/html');
 	res.send(`
