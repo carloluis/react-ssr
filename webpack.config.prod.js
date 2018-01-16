@@ -21,7 +21,7 @@ const clientConfig = {
 	},
 	output: {
 		path: PATHS.dist,
-		filename: '[name].js',
+		filename: '[name].[chunkhash].js',
 		publicPath: '/'
 	},
 	module: {
@@ -38,10 +38,9 @@ const clientConfig = {
 						{
 							loader: 'css-loader',
 							options: {
-								modules: true,
 								camelCase: 'dashes',
-								localIdentName: '[path][name]__[local]',
-								minimize: false
+								minimize: true,
+								modules: true
 							}
 						}
 					]
@@ -70,11 +69,14 @@ const clientConfig = {
 	},
 	plugins: [
 		new ExtractTextPlugin({
-			filename: '[name].css'
+			filename: '[name].[chunkhash].css'
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
-			filename: 'vendor.js'
+			filename: 'vendor.[chunkhash].js'
+		}),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': '"production"'
 		}),
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.NamedModulesPlugin(),
@@ -109,14 +111,9 @@ const clientConfig = {
 		version: true
 	},
 	performance: {
-		hints: 'warning',
+		hints: 'error',
 		maxAssetSize: 1000000
-	},
-	watchOptions: {
-		aggregateTimeout: 500,
-		ignored: /node_modules/
 	}
-	// watch: true
 };
 
 const serverConfig = {
@@ -172,15 +169,13 @@ const serverConfig = {
 						loader: 'css-loader/locals',
 						options: {
 							modules: true,
-							camelCase: 'dashes',
-							localIdentName: '[path][name]__[local]'
+							camelCase: 'dashes'
 						}
 					}
 				]
 			}
 		]
 	},
-	// devtool: 'cheap-module-source-map',
 	stats: {
 		all: false,
 		assets: true,
