@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import 'isomorphic-fetch';
 import pageAssets from './utils/page-assets';
+import serialize from 'serialize-javascript';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import App from '../shared';
@@ -63,7 +64,7 @@ app.get('*', (req, res) => {
 			<link rel="stylesheet" href="/${appcss}">
 			<script src="/${vendorjs}" defer></script>
 			<script src="/${appjs}" defer></script>
-			<script>window._initialData_ = ${JSON.stringify(data)};</script>
+			<script>window._initialData_ = ${serialize(data)};</script>
 		</head>
 		<body>
 			<div id="app">${ReactDOM.renderToString(<App initialData={data} />)}</div>
