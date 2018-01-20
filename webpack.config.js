@@ -129,6 +129,7 @@ const serverConfig = {
 		__dirname: true,
 		__filename: true
 	},
+	externals: [/^[a-z\-0-9]/],
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},

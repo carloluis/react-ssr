@@ -126,6 +126,7 @@ const serverConfig = {
 		__dirname: true,
 		__filename: true
 	},
+	externals: [/^[a-z\-0-9]/, 'express', 'somorphic-fetch', 'serialize-javascript', 'react', 'react-dom/server'],
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
