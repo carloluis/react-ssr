@@ -4,6 +4,7 @@
 /dist
 server.js
 server.js.map
+src/shared/shared.js
 
 # dependencies
 /node_modules/
