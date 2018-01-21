@@ -14,7 +14,7 @@ const clientConfig = {
 	context: __dirname,
 	entry: {
 		app: [PATHS.client],
-		vendor: ['react', 'react-dom', 'isomorphic-fetch']
+		vendor: ['react', 'react-dom', 'react-router-dom', 'isomorphic-fetch']
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']

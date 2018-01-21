@@ -1,13 +1,12 @@
 import React from 'react';
-import styles from './app.css';
-
+import { Link } from 'react-router-dom';
 import Counter from '../counter/Counter';
+import styles from './home.css';
 
-class App extends React.Component {
+class Home extends React.Component {
 	constructor(props) {
 		super(props);
-
-		let data = props.initialData;
+		let data = props.staticContext && props.staticContext.initialData;
 		if (!data) {
 			data = window._initialData_;
 			delete window._initialData_;
@@ -17,7 +16,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		if (!this.state.data) {
-			App.requestInitialData().then(data => this.setState({ data }));
+			Home.requestInitialData().then(data => this.setState({ data }));
 		}
 	}
 
@@ -26,14 +25,18 @@ class App extends React.Component {
 	}
 
 	render() {
+		const { data } = this.state;
 		return (
 			<div className={styles.container}>
 				<h1>Hello React SSR!</h1>
 				<Counter />
-				<ul>{this.state.data.map(item => <li key={item.id}>{item.text}</li>)}</ul>
+				{!!data && <ul>{data.map(item => <li key={item.id}>{item.text}</li>)}</ul>}
+				<div>
+					<Link to="/about">about</Link>
+				</div>
 			</div>
 		);
 	}
 }
 
-export default App;
+export default Home;

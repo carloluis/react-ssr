@@ -1,4 +1,4 @@
 import 'isomorphic-fetch';
-import App from './app/App';
+import App from './App';
 
 export default App;

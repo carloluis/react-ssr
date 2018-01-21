@@ -5,6 +5,8 @@ import pageAssets from './utils/page-assets';
 import serialize from 'serialize-javascript';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import { StaticRouter, matchPath } from 'react-router-dom';
+import routes from '../shared/routes';
 import App from '../shared';
 
 const DIST_DIR = path.join(__dirname, '../../dist');
@@ -54,9 +56,20 @@ app.get('/stream', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-	App.requestInitialData().then(data => {
+	const currentRoute = routes.find(route => matchPath(req.url, route));
+	const { requestInitialData } = currentRoute.component;
+	const dataRequested = requestInitialData && requestInitialData();
+
+	Promise.resolve(dataRequested).then(data => {
+		const context = { initialData: data };
+		const markup = ReactDOM.renderToString(
+			<StaticRouter location={req.url} context={context}>
+				<App />
+			</StaticRouter>
+		);
 		res.set('content-type', 'text/html');
-		res.send(`<!DOCTYPE html>
+		res.send(`
+		<!DOCTYPE html>
 		<html>
 		<head>
 			<meta charset="utf-8">
@@ -67,7 +80,7 @@ app.get('*', (req, res) => {
 			<script>window._initialData_ = ${serialize(data)};</script>
 		</head>
 		<body>
-			<div id="app">${ReactDOM.renderToString(<App initialData={data} />)}</div>
+			<div id="app">${markup}</div>
 		</body>
 		</html>
 		`);
