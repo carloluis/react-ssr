@@ -71,6 +71,7 @@ app.get('*', (req, res) => {
 			<head>
 				<meta charset="utf-8">
 				<title>React SSR</title>
+				<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 				<link rel="stylesheet" href="/${appcss}">
 				<script src="/${vendorjs}" defer></script>
 				<script src="/${appjs}" defer></script>
