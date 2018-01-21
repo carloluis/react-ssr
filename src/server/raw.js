@@ -34,19 +34,27 @@ app.get('/api/sample', (req, res) => {
 });
 
 app.get('/stream', (req, res) => {
-	App.requestInitialData().then(data => {
+	const currentRoute = routes.find(route => matchPath('/', route));
+	const { requestInitialData } = currentRoute.component;
+	const dataRequested = requestInitialData && requestInitialData();
+
+	Promise.resolve(dataRequested).then(data => {
 		res.write(`<!DOCTYPE html>
 	<html>
 	<head>
 		<meta charset="utf-8">
 		<title>React SSR Stream</title>
+		<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 		<link rel="stylesheet" href="/${appcss}">
 		<script src="/${vendorjs}" defer></script>
 		<script src="/${appjs}" defer></script>
 		<script>window._initialData_ = ${JSON.stringify(data)};</script>
 	</head>`);
 		res.write('<div id="app">');
-		const stream = ReactDOM.renderToNodeStream(React.createElement(App, { initialData: data }));
+		const context = { initialData: data };
+		const stream = ReactDOM.renderToNodeStream(
+			React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
+		);
 		stream.pipe(res, { end: false });
 		stream.on('end', () => {
 			res.write(`</div></body></html>`);

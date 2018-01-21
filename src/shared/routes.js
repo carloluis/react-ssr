@@ -10,6 +10,10 @@ const routes = [
 	{
 		path: '/about',
 		component: About
+	},
+	{
+		path: '/stream',
+		component: Home
 	}
 ];
 
