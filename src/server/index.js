@@ -10,7 +10,7 @@ import routes from '../shared/routes';
 import App from '../shared';
 
 const DIST_DIR = path.join(__dirname, '../../dist');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const [appjs, vendorjs, appcss] = pageAssets();
 
@@ -74,6 +74,7 @@ app.get('*', (req, res) => {
 		<head>
 			<meta charset="utf-8">
 			<title>React SSR</title>
+			<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 			<link rel="stylesheet" href="/${appcss}">
 			<script src="/${vendorjs}" defer></script>
 			<script src="/${appjs}" defer></script>

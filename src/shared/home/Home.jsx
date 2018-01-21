@@ -21,7 +21,7 @@ class Home extends React.Component {
 	}
 
 	static requestInitialData() {
-		return fetch(`http://localhost:3000/api/sample`).then(response => response.json());
+		return fetch(`http://localhost:3001/api/sample`).then(response => response.json());
 	}
 
 	render() {
