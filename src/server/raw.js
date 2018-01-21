@@ -3,13 +3,13 @@ const path = require('path');
 const serialize = require('serialize-javascript');
 require('isomorphic-fetch');
 const webpackStats = require('../../dist/webpack-stats.json');
-
 const React = require('react');
 const ReactDOM = require('react-dom/server');
-const App = require('../shared/shared').default;
+const { StaticRouter, matchPath } = require('react-router-dom');
+const { default: App, routes } = require('../shared/shared');
 
 const DIST_DIR = path.join(__dirname, '../../dist');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const [appjs, vendorjs, appcss] = webpackStats.assets.map(asset => asset.name);
 
@@ -55,23 +55,32 @@ app.get('/stream', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-	App.requestInitialData().then(data => {
+	const currentRoute = routes.find(route => matchPath(req.url, route));
+	const { requestInitialData } = currentRoute.component;
+	const dataRequested = requestInitialData && requestInitialData();
+
+	Promise.resolve(dataRequested).then(data => {
+		const context = { initialData: data };
+		const markup = ReactDOM.renderToString(
+			React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
+		);
 		res.set('content-type', 'text/html');
-		res.send(`<!DOCTYPE html>
-		<html>
-		<head>
-			<meta charset="utf-8">
-			<title>React SSR</title>
-			<link rel="stylesheet" href="/${appcss}">
-			<script src="/${vendorjs}" defer></script>
-			<script src="/${appjs}" defer></script>
-			<script>window._initialData_ = ${serialize(data)};</script>
-		</head>
-		<body>
-			<div id="app">${ReactDOM.renderToString(React.createElement(App, { initialData: data }))}</div>
-		</body>
-		</html>
-		`);
+		res.send(`
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<meta charset="utf-8">
+				<title>React SSR</title>
+				<link rel="stylesheet" href="/${appcss}">
+				<script src="/${vendorjs}" defer></script>
+				<script src="/${appjs}" defer></script>
+				<script>window._initialData_ = ${serialize(data)};</script>
+			</head>
+			<body>
+				<div id="app">${markup}</div>
+			</body>
+			</html>
+			`);
 		res.end();
 	});
 });

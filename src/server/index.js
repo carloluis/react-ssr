@@ -1,13 +1,12 @@
 import express from 'express';
 import path from 'path';
+import serialize from 'serialize-javascript';
 import 'isomorphic-fetch';
 import pageAssets from './utils/page-assets';
-import serialize from 'serialize-javascript';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
-import routes from '../shared/routes';
-import App from '../shared';
+import App, { routes } from '../shared';
 
 const DIST_DIR = path.join(__dirname, '../../dist');
 const PORT = process.env.PORT || 3001;
