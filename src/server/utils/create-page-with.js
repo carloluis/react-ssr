@@ -1,7 +1,20 @@
 const serialize = require('serialize-javascript');
 
 function createPageWith(config) {
-	const { title = 'React SSR', appcss, vendorjs, appjs, data, markup } = config;
+	const { markup, ...headConfig } = config;
+	const doc_html_head = createHeadWith(headConfig);
+
+	return `
+	${doc_html_head}
+	<body>
+		<div id="app">${markup}</div>
+	</body>
+	</html>
+	`;
+}
+
+function createHeadWith(config) {
+	const { title = 'React SSR Streamed', appcss, vendorjs, appjs, data } = config;
 
 	return `
 	<!DOCTYPE html>
@@ -14,12 +27,10 @@ function createPageWith(config) {
 		<script src="/${vendorjs}" defer></script>
 		<script src="/${appjs}" defer></script>
 		<script>window._initialData_ = ${serialize(data)};</script>
-	</head>
-	<body>
-		<div id="app">${markup}</div>
-	</body>
-	</html>
-	`;
+	</head>`;
 }
 
-module.exports = createPageWith;
+module.exports = {
+	createPageWith,
+	createHeadWith
+};

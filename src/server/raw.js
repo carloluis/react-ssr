@@ -3,7 +3,7 @@ const path = require('path');
 const serialize = require('serialize-javascript');
 require('isomorphic-fetch');
 const webpackStats = require('../../dist/webpack-stats.json');
-const createPageWith = require('./utils/create-page-with');
+const { createPageWith, createHeadWith } = require('./utils/create-page-with');
 const React = require('react');
 const ReactDOM = require('react-dom/server');
 const { StaticRouter, matchPath } = require('react-router-dom');
@@ -39,18 +39,15 @@ app.get('/stream', (req, res) => {
 	const dataRequested = requestInitialData && requestInitialData();
 
 	Promise.resolve(dataRequested).then(data => {
-		res.write(`<!DOCTYPE html>
-	<html>
-	<head>
-		<meta charset="utf-8">
-		<title>React SSR Stream</title>
-		<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-		<link rel="stylesheet" href="/${appcss}">
-		<script src="/${vendorjs}" defer></script>
-		<script src="/${appjs}" defer></script>
-		<script>window._initialData_ = ${JSON.stringify(data)};</script>
-	</head>`);
-		res.write('<div id="app">');
+		res.write(
+			createHeadWith({
+				appcss,
+				appjs,
+				vendorjs,
+				data
+			})
+		);
+		res.write('<body><div id="app">');
 		const context = { initialData: data };
 		const stream = ReactDOM.renderToNodeStream(
 			React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
