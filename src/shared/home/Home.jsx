@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Counter from '../counter/Counter';
+import getData from '../utils/get-data';
 import styles from './home.css';
 
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
-		let data = props.staticContext && props.staticContext.initialData;
-		if (!data) {
-			data = window._initialData_;
-			delete window._initialData_;
-		}
+		const data = getData(props);
 		this.state = { data };
 	}
 
