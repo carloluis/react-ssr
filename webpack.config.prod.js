@@ -14,7 +14,7 @@ const clientConfig = {
 	context: __dirname,
 	entry: {
 		app: [PATHS.client],
-		vendor: ['react', 'react-dom', 'isomorphic-fetch']
+		vendor: ['react', 'react-dom', 'react-router-dom', 'isomorphic-fetch']
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
@@ -126,7 +126,15 @@ const serverConfig = {
 		__dirname: true,
 		__filename: true
 	},
-	externals: [/^[a-z\-0-9]/, 'express', 'somorphic-fetch', 'serialize-javascript', 'react', 'react-dom/server'],
+	externals: [
+		/^[a-z\-0-9]/,
+		'express',
+		'path',
+		'isomorphic-fetch',
+		'serialize-javascript',
+		'react',
+		'react-dom/server'
+	],
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
@@ -187,4 +195,80 @@ const serverConfig = {
 	}
 };
 
-module.exports = [clientConfig, serverConfig];
+const sharedConfig = {
+	context: __dirname,
+	entry: {
+		shared: [PATHS.shared]
+	},
+	target: 'node',
+	node: {
+		__dirname: true,
+		__filename: true
+	},
+	externals: [/^[a-z\-0-9]/],
+	resolve: {
+		extensions: ['.js', '.jsx']
+	},
+	output: {
+		path: PATHS.shared,
+		filename: '[name].js',
+		libraryTarget: 'commonjs2'
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jsx?$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader',
+				query: {
+					presets: [
+						[
+							'env',
+							{
+								targets: {
+									node: 'current'
+								},
+								modules: 'commonjs'
+							}
+						],
+						'react'
+					]
+				}
+			},
+			{
+				test: /\.(jpg|png|gif|svg|woff|woff2|mp4|eot|ttf)$/,
+				loader: 'file-loader',
+				options: {
+					emit: false
+				}
+			},
+			{
+				test: /\.css$/,
+				use: [
+					{
+						loader: 'css-loader/locals',
+						options: {
+							modules: true,
+							camelCase: 'dashes'
+						}
+					}
+				]
+			}
+		]
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': '"production"'
+		})
+	],
+	stats: {
+		all: false,
+		assets: true,
+		chunks: true,
+		timings: true,
+		env: true,
+		hash: true
+	}
+};
+
+module.exports = [clientConfig, serverConfig, sharedConfig];
