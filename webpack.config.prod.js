@@ -78,6 +78,11 @@ const clientConfig = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': '"production"'
 		}),
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	compress: {
+		// 		warnings: false
+		// 	}
+		// }),
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.NamedModulesPlugin(),
 		function() {
@@ -97,7 +102,7 @@ const clientConfig = {
 			});
 		}
 	],
-	devtool: 'source-map',
+	devtool: 'hidden-source-map',
 	stats: {
 		all: false,
 		assets: true,
@@ -116,85 +121,6 @@ const clientConfig = {
 	}
 };
 
-const serverConfig = {
-	context: __dirname,
-	entry: {
-		server: [PATHS.server]
-	},
-	target: 'node',
-	node: {
-		__dirname: true,
-		__filename: true
-	},
-	externals: [
-		/^[a-z\-0-9]/,
-		'express',
-		'path',
-		'isomorphic-fetch',
-		'serialize-javascript',
-		'react',
-		'react-dom/server'
-	],
-	resolve: {
-		extensions: ['.js', '.jsx']
-	},
-	output: {
-		path: __dirname,
-		filename: '[name].js',
-		libraryTarget: 'commonjs2'
-	},
-	module: {
-		rules: [
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				loader: 'babel-loader',
-				query: {
-					presets: [
-						[
-							'env',
-							{
-								targets: {
-									node: 'current'
-								},
-								modules: 'commonjs'
-							}
-						],
-						'react'
-					]
-				}
-			},
-			{
-				test: /\.(jpg|png|gif|svg|woff|woff2|mp4|eot|ttf)$/,
-				loader: 'file-loader',
-				options: {
-					emit: false
-				}
-			},
-			{
-				test: /\.css$/,
-				use: [
-					{
-						loader: 'css-loader/locals',
-						options: {
-							modules: true,
-							camelCase: 'dashes'
-						}
-					}
-				]
-			}
-		]
-	},
-	stats: {
-		all: false,
-		assets: true,
-		chunks: true,
-		timings: true,
-		env: true,
-		hash: true
-	}
-};
-
 const sharedConfig = {
 	context: __dirname,
 	entry: {
@@ -205,7 +131,7 @@ const sharedConfig = {
 		__dirname: true,
 		__filename: true
 	},
-	externals: [/^[a-z\-0-9]/],
+	externals: [/^[a-z\-0-9]/, 'react', 'react-dom', 'react-router-dom', 'isomorphic-fetch'],
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
@@ -271,4 +197,4 @@ const sharedConfig = {
 	}
 };
 
-module.exports = [clientConfig, serverConfig, sharedConfig];
+module.exports = [clientConfig, sharedConfig];

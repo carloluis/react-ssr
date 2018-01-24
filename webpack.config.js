@@ -119,79 +119,6 @@ const clientConfig = {
 	// watch: true
 };
 
-const serverConfig = {
-	context: __dirname,
-	entry: {
-		server: [PATHS.server]
-	},
-	target: 'node',
-	node: {
-		__dirname: true,
-		__filename: true
-	},
-	externals: [/^[a-z\-0-9]/],
-	resolve: {
-		extensions: ['.js', '.jsx']
-	},
-	output: {
-		path: __dirname,
-		filename: '[name].js',
-		libraryTarget: 'commonjs2'
-	},
-	module: {
-		rules: [
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				loader: 'babel-loader',
-				query: {
-					presets: [
-						[
-							'env',
-							{
-								targets: {
-									node: 'current'
-								},
-								modules: 'commonjs'
-							}
-						],
-						'react'
-					]
-				}
-			},
-			{
-				test: /\.(jpg|png|gif|svg|woff|woff2|mp4|eot|ttf)$/,
-				loader: 'file-loader',
-				options: {
-					emit: false
-				}
-			},
-			{
-				test: /\.css$/,
-				use: [
-					{
-						loader: 'css-loader/locals',
-						options: {
-							modules: true,
-							camelCase: 'dashes',
-							localIdentName: '[path][name]__[local]'
-						}
-					}
-				]
-			}
-		]
-	},
-	// devtool: 'cheap-module-source-map',
-	stats: {
-		all: false,
-		assets: true,
-		chunks: true,
-		timings: true,
-		env: true,
-		hash: true
-	}
-};
-
 const sharedConfig = {
 	context: __dirname,
 	entry: {
@@ -254,6 +181,7 @@ const sharedConfig = {
 			}
 		]
 	},
+	devtool: 'cheap-module-source-map',
 	stats: {
 		all: false,
 		assets: true,
@@ -264,4 +192,4 @@ const sharedConfig = {
 	}
 };
 
-module.exports = [clientConfig, serverConfig, sharedConfig];
+module.exports = [clientConfig, sharedConfig];
