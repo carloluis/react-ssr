@@ -5,6 +5,7 @@
 server.js
 server.js.map
 src/shared/shared.js
+src/shared/shared.js.map
 
 # dependencies
 /node_modules/

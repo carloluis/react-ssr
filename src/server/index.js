@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const serialize = require('serialize-javascript');
 require('isomorphic-fetch');
-const webpackStats = require('../../dist/webpack-stats.json');
+
 const { createPageWith, createHeadWith } = require('./utils/create-page-with');
+const getAssets = require('./utils/webpack-assets');
+
 const React = require('react');
 const ReactDOM = require('react-dom/server');
 const { StaticRouter, matchPath } = require('react-router-dom');
@@ -12,7 +14,7 @@ const { default: App, routes } = require('../shared/shared');
 const DIST_DIR = path.join(__dirname, '../../dist');
 const PORT = process.env.PORT || 3001;
 
-const [appjs, vendorjs, appcss] = webpackStats.assets.map(asset => asset.name);
+const [appjs, vendorjs, appcss] = getAssets();
 
 const app = express();
 
