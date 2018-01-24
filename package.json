@@ -4,10 +4,11 @@
   "description": "react server-side-rendering",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development webpack -w & NODE_ENV=development node server.js",
-	"prod": "NODE_ENV=production webpack -p --config webpack.config.prod.js && NODE_ENV=production node server.js",
-	"raw": "NODE_ENV=development webpack -w & NODE_ENV=development node src/server/raw.js",
+    "test": "echo 'Error: no test specified' && exit 1",
+    "start": "npm run prod",
+    "dev": "NODE_ENV=development webpack -w & NODE_ENV=development node src/server/raw.js",
+    "prod": "npm run build:production && NODE_ENV=production node src/server/raw.js",
+    "build:production": "NODE_ENV=production webpack -p --config webpack.config.prod.js",
     "webpack": "./node_modules/.bin/webpack"
   },
   "repository": {
