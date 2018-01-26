@@ -5,6 +5,13 @@ require('isomorphic-fetch');
 
 const { createPageWith, createHeadWith } = require('./utils/create-page-with');
 const getAssets = require('./utils/webpack-assets');
+const {
+	configureBodyParser,
+	configureCompression,
+	configureCors,
+	configureErrorHandler,
+	configureRequestLogger
+} = require('./utils/configure');
 
 const React = require('react');
 const ReactDOM = require('react-dom/server');
@@ -18,9 +25,9 @@ const [appjs, vendorjs, appcss] = getAssets();
 
 const app = express();
 
-app.use(express.static(DIST_DIR));
+initServer(app);
 
-require('./routes')(app);
+app.use(express.static(DIST_DIR));
 
 app.get('/stream', (req, res) => {
 	const currentRoute = routes.find(route => matchPath('/', route));
@@ -76,3 +83,13 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
 	console.info(`server is running on http://localhost:${PORT}`);
 });
+
+function initServer(app) {
+	configureCors(app);
+	configureBodyParser(app);
+	configureErrorHandler(app);
+	configureCompression(app);
+	configureRequestLogger(app);
+
+	require('./routes')(app);
+}

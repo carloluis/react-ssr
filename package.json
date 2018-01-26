@@ -38,6 +38,8 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
     "express": "^4.16.2",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.2.0",
