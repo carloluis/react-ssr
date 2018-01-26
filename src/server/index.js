@@ -20,20 +20,7 @@ const app = express();
 
 app.use(express.static(DIST_DIR));
 
-app.get('/api/sample', (req, res) => {
-	res.json([
-		{
-			id: 1,
-			text: 'React SSR',
-			url: '/'
-		},
-		{
-			id: 2,
-			text: 'React SSR Stream',
-			url: '/stream'
-		}
-	]);
-});
+require('./routes')(app);
 
 app.get('/stream', (req, res) => {
 	const currentRoute = routes.find(route => matchPath('/', route));
