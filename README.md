@@ -21,3 +21,19 @@ src
 └── shared
     └── app
 ```
+
+## Setup
+
+Restore all dependencies
+
+```bash
+npm install
+```
+
+Start development server
+
+```bash
+npm run dev
+```
+
+Then, open [localhost:3001](http://localhost:3001/)
