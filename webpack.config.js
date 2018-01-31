@@ -122,7 +122,7 @@ const clientConfig = {
 const sharedConfig = {
 	context: __dirname,
 	entry: {
-		shared: [PATHS.shared]
+		shared: [path.join(PATHS.shared, 'server.js')]
 	},
 	target: 'node',
 	node: {
