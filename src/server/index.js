@@ -3,7 +3,6 @@ const path = require('path');
 const serialize = require('serialize-javascript');
 require('isomorphic-fetch');
 
-const { createPageWith, createHeadWith } = require('./utils/create-page-with');
 const getAssets = require('./utils/webpack-assets');
 const {
 	configureBodyParser,
@@ -16,7 +15,7 @@ const {
 const React = require('react');
 const ReactDOM = require('react-dom/server');
 const { StaticRouter, matchPath } = require('react-router-dom');
-const { default: App, routes } = require('../shared/shared');
+const { Html, App, routes } = require('../shared/shared');
 
 const DIST_DIR = path.join(__dirname, '../../dist');
 const PORT = process.env.PORT || 3001;
@@ -35,24 +34,21 @@ app.get('/stream', (req, res) => {
 	const dataRequested = requestInitialData && requestInitialData();
 
 	Promise.resolve(dataRequested).then(data => {
-		res.write(
-			createHeadWith({
-				appcss,
-				appjs,
-				vendorjs,
-				data
-			})
-		);
-		res.write('<body><div id="app">');
 		const context = { initialData: data };
 		const stream = ReactDOM.renderToNodeStream(
-			React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
+			React.createElement(
+				Html,
+				{
+					title: 'React SSR',
+					scripts: { appjs, vendorjs },
+					styles: { appcss },
+					data: serialize(data)
+				},
+				React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
+			)
 		);
-		stream.pipe(res, { end: false });
-		stream.on('end', () => {
-			res.write(`</div></body></html>`);
-			res.end();
-		});
+		res.set('content-type', 'text/html');
+		stream.pipe(res);
 	});
 });
 
@@ -64,18 +60,18 @@ app.get('*', (req, res) => {
 	Promise.resolve(dataRequested).then(data => {
 		const context = { initialData: data };
 		const markup = ReactDOM.renderToString(
-			React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
+			React.createElement(
+				Html,
+				{
+					title: 'React SSR',
+					scripts: { appjs, vendorjs },
+					styles: { appcss },
+					data: serialize(data)
+				},
+				React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
+			)
 		);
-		res.set('content-type', 'text/html');
-		res.send(
-			createPageWith({
-				appcss,
-				appjs,
-				vendorjs,
-				data,
-				markup
-			})
-		);
+		res.send(markup);
 		res.end();
 	});
 });
