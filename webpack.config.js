@@ -89,6 +89,7 @@ const clientConfig = {
 						stats.toJson({
 							all: false,
 							assets: true,
+							cachedAssets: true,
 							excludeAssets: /.map$/,
 							hash: true,
 							timings: true
