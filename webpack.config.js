@@ -31,7 +31,7 @@ const clientConfig = {
 				use: 'file-loader'
 			},
 			{
-				test: /\.css$/,
+				test: /\.scss$/,
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
 					use: [
@@ -43,6 +43,9 @@ const clientConfig = {
 								localIdentName: '[path][name]__[local]',
 								minimize: false
 							}
+						},
+						{
+							loader: 'sass-loader'
 						}
 					]
 				})
@@ -167,7 +170,7 @@ const sharedConfig = {
 				}
 			},
 			{
-				test: /\.css$/,
+				test: /\.scss$/,
 				use: [
 					{
 						loader: 'css-loader/locals',
@@ -176,6 +179,9 @@ const sharedConfig = {
 							camelCase: 'dashes',
 							localIdentName: '[path][name]__[local]'
 						}
+					},
+					{
+						loader: 'sass-loader'
 					}
 				]
 			}

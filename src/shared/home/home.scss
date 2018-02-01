@@ -1,0 +1,24 @@
+.container {
+	background: pink;
+	text-align: center;
+	padding: 16px;
+
+	& > h1 {
+		font-size: 3rem;
+	}
+
+	.list {
+		& li {
+			display: inline-block;
+			padding: 8px;
+			margin: 0 8px;
+
+			&:not(:last-child)::after {
+				content: ' |';
+			}
+		}
+	}
+	.nav {
+		padding: 16px 0px;
+	}
+}
