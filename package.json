@@ -9,6 +9,7 @@
     "dev": "NODE_ENV=development webpack -w & NODE_ENV=development nodemon src/server/index.js",
     "prod": "npm run build:production && NODE_ENV=production node src/server/index.js",
     "build:production": "NODE_ENV=production webpack -p --config webpack.config.prod.js",
+    "lint": "eslint src/ --ext .js,.jsx --ignore-path .gitignore --cache",
     "webpack": "./node_modules/.bin/webpack"
   },
   "repository": {
@@ -28,10 +29,14 @@
   "homepage": "https://github.com/carloluis/react-ssr#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.8",
+    "eslint": "^4.17.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-react": "^7.6.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "node-sass": "^4.7.2",
