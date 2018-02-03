@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (request, response, next) => {
+router.get('/', (request, response) => {
 	response.json([
 		{
 			id: 1,
@@ -26,7 +26,7 @@ router.get('/', (request, response, next) => {
 	]);
 });
 
-router.get('/ack', (request, response, next) => {
+router.get('/ack', (request, response) => {
 	response.json(42);
 });
 

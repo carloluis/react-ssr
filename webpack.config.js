@@ -7,7 +7,8 @@ const PATHS = {
 	client: path.join(__dirname, 'src/client'),
 	server: path.join(__dirname, 'src/server'),
 	shared: path.join(__dirname, 'src/shared'),
-	dist: path.join(__dirname, 'dist')
+	dist: path.join(__dirname, 'dist'),
+	src: path.join(__dirname, 'src')
 };
 
 const clientConfig = {
@@ -68,6 +69,13 @@ const clientConfig = {
 						'react'
 					]
 				}
+			},
+			{
+				test: /\.jsx?$/,
+				use: ['eslint-loader'],
+				include: PATHS.src,
+				exclude: /node_modules/,
+				enforce: 'pre'
 			}
 		]
 	},
@@ -108,13 +116,16 @@ const clientConfig = {
 		chunks: false,
 		entrypoints: false,
 		excludeAssets: /.map$/,
+		errors: true,
+		warnings: true,
 		env: true,
 		hash: true,
 		version: true
 	},
 	performance: {
 		hints: 'warning',
-		maxAssetSize: 1000000
+		maxAssetSize: 512000,
+		maxEntrypointSize: 5120000
 	},
 	watchOptions: {
 		aggregateTimeout: 500,

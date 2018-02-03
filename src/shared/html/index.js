@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Html = ({ title, children, scripts, styles, data }) => {
 	const { appjs, vendorjs } = scripts;
@@ -18,6 +19,14 @@ const Html = ({ title, children, scripts, styles, data }) => {
 			</body>
 		</html>
 	);
+};
+
+Html.propTypes = {
+	title: PropTypes.string.isRequired,
+	children: PropTypes.node,
+	scripts: PropTypes.object,
+	styles: PropTypes.object,
+	data: PropTypes.string
 };
 
 export default Html;
