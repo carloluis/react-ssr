@@ -28,7 +28,7 @@ initServer(app);
 
 app.use(express.static(DIST_DIR));
 
-app.get('/stream', (req, res) => {
+app.get('*', (req, res) => {
 	const currentRoute = routes.find(route => matchPath('/', route));
 	const { requestInitialData } = currentRoute.component;
 	const dataRequested = requestInitialData && requestInitialData();
@@ -49,30 +49,6 @@ app.get('/stream', (req, res) => {
 		);
 		res.set('content-type', 'text/html');
 		stream.pipe(res);
-	});
-});
-
-app.get('*', (req, res) => {
-	const currentRoute = routes.find(route => matchPath(req.url, route));
-	const { requestInitialData } = currentRoute.component;
-	const dataRequested = requestInitialData && requestInitialData();
-
-	Promise.resolve(dataRequested).then(data => {
-		const context = { initialData: data };
-		const markup = ReactDOM.renderToString(
-			React.createElement(
-				Html,
-				{
-					title: 'React SSR',
-					scripts: { appjs, vendorjs },
-					styles: { appcss },
-					data: serialize(data)
-				},
-				React.createElement(StaticRouter, { location: req.url, context }, React.createElement(App))
-			)
-		);
-		res.send(markup);
-		res.end();
 	});
 });
 

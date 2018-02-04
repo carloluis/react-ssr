@@ -21,7 +21,7 @@
     "react",
     "server-side-rendering"
   ],
-  "author": "Carloluis Rodríguez <carloluisr@gmail.com>",
+  "author": "Carloluis Rodríguez <carloluisr@gmail.com> (https://github.com/carloluis)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/carloluis/react-ssr/issues"
