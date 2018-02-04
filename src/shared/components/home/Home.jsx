@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Counter from '../counter/Counter';
-import getData from '../utils/get-data';
+import getData from '../../utils/get-data';
 import styles from './home.scss';
 
 class Home extends React.Component {
