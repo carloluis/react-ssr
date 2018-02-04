@@ -1,5 +1,6 @@
 import Home from './components/home/Home';
 import About from './components/about/About';
+import Counter from './components/counter/Counter';
 
 const routes = [
 	{
@@ -10,6 +11,9 @@ const routes = [
 	{
 		path: '/about',
 		component: About
+	},
+	{
+		component: Counter
 	}
 ];
 
