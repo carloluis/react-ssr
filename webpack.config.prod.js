@@ -11,6 +11,7 @@ const PATHS = {
 };
 
 const clientConfig = {
+	name: 'client',
 	context: __dirname,
 	entry: {
 		app: [PATHS.client],
@@ -125,6 +126,7 @@ const clientConfig = {
 };
 
 const sharedConfig = {
+	name: 'shared',
 	context: __dirname,
 	entry: {
 		shared: [path.join(PATHS.shared, 'server.js')]
