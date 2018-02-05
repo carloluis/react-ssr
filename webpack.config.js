@@ -15,7 +15,7 @@ const clientConfig = {
 	context: __dirname,
 	entry: {
 		app: [PATHS.client],
-		vendor: ['react', 'react-dom', 'react-router-dom', 'isomorphic-fetch']
+		vendor: ['react', 'react-dom', 'react-router-dom', 'react-helmet', 'isomorphic-fetch']
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
@@ -144,7 +144,7 @@ const sharedConfig = {
 		__dirname: true,
 		__filename: true
 	},
-	externals: [/^[a-z\-0-9]/],
+	externals: [/^[a-z\-0-9]/, 'react', 'react-dom', 'react-router-dom', 'react-helmet', 'isomorphic-fetch'],
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},

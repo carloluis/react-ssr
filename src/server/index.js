@@ -39,7 +39,6 @@ app.get('*', (req, res) => {
 			React.createElement(
 				Html,
 				{
-					title: 'React SSR',
 					scripts: { appjs, vendorjs },
 					styles: { appcss },
 					data: serialize(data)

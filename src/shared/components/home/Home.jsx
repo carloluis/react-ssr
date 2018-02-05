@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Counter from '../counter/Counter';
+import Document from '../document/Document';
 import getData from '../../utils/get-data';
 import styles from './home.scss';
 
@@ -25,6 +26,7 @@ class Home extends React.Component {
 		const { data } = this.state;
 		return (
 			<div className={styles.container}>
+				<Document title="Home | SSR" />
 				<h1>Simple React SSR!</h1>
 				<Counter />
 				{!!data && <ul className={styles.list}>{data.map(item => <li key={item.id}>{item.text}</li>)}</ul>}
