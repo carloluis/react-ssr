@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 
-const Html = ({ children, scripts, styles, data }) => {
+const Html = ({ title, children, scripts, styles, data }) => {
 	const { appjs, vendorjs } = scripts;
-	const helmet = Helmet.renderStatic();
 
 	return (
 		<html>
 			<head>
-				{helmet.title.toComponent()}
+				<title>{title}</title>
 				<link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 				<link rel="stylesheet" href={'/' + styles.appcss} />
 				<script dangerouslySetInnerHTML={{ __html: `window._initialData_ = ${data};` }} />
@@ -24,6 +22,7 @@ const Html = ({ children, scripts, styles, data }) => {
 };
 
 Html.propTypes = {
+	title: PropTypes.string,
 	children: PropTypes.node,
 	scripts: PropTypes.object,
 	styles: PropTypes.object,

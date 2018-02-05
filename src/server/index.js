@@ -4,6 +4,7 @@ const serialize = require('serialize-javascript');
 require('isomorphic-fetch');
 
 const getAssets = require('./utils/webpack-assets');
+const getSEO = require('./utils/page-seo');
 const {
 	configureBodyParser,
 	configureCompression,
@@ -29,9 +30,10 @@ initServer(app);
 app.use(express.static(DIST_DIR));
 
 app.get('*', (req, res) => {
-	const currentRoute = routes.find(route => matchPath('/', route));
+	const currentRoute = routes.find(route => matchPath(req.url, route));
 	const { requestInitialData } = currentRoute.component;
 	const dataRequested = requestInitialData && requestInitialData();
+	const seo = getSEO(currentRoute);
 
 	Promise.resolve(dataRequested).then(data => {
 		const context = { initialData: data };
@@ -39,6 +41,7 @@ app.get('*', (req, res) => {
 			React.createElement(
 				Html,
 				{
+					title: seo.title,
 					scripts: { appjs, vendorjs },
 					styles: { appcss },
 					data: serialize(data)
