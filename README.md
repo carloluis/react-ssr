@@ -1,6 +1,6 @@
 # react-ssr
 
-Base project for server side rendering with react.
+Base project for server side rendering with React v16.
 
 ## Stack
 
@@ -9,6 +9,7 @@ Base project for server side rendering with react.
 * ReactRouter
 * Webpack
 * Express
+* Helmet
 
 ## Structure
 
@@ -24,16 +25,10 @@ src
 
 ## Setup
 
-Restore all dependencies
+Restore dependencies and start development server:
 
 ```bash
-npm install
-```
-
-Start development server
-
-```bash
-npm run dev
+yarn && yarn dev
 ```
 
 Then, open [localhost:3001](http://localhost:3001/)
