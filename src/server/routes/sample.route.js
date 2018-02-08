@@ -15,13 +15,13 @@ router.get('/', (request, response) => {
 		},
 		{
 			id: 3,
-			text: 'React SSR',
-			url: '/'
+			text: 'React',
+			url: 'https://reactjs.org'
 		},
 		{
 			id: 4,
-			text: 'React SSR Stream',
-			url: '/stream'
+			text: 'SSR',
+			url: 'https://reactjs.org/docs/react-dom-server.html'
 		}
 	]);
 });
