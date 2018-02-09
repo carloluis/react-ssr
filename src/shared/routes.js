@@ -1,6 +1,6 @@
 import Home from './components/home/Home';
 import About from './components/about/About';
-import Counter from './components/counter/Counter';
+import NotFound from './components/not-found/NotFound';
 
 const routes = [
 	{
@@ -13,7 +13,7 @@ const routes = [
 		component: About
 	},
 	{
-		component: Counter
+		component: NotFound
 	}
 ];
 
