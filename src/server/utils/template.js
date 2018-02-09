@@ -1,4 +1,4 @@
-function Template({ helmet, markup, scripts, styles, data }) {
+function template({ helmet, markup, scripts, styles, data }) {
 	const { appjs, vendorjs } = scripts;
 
 	return `<!doctype html>
@@ -17,4 +17,4 @@ function Template({ helmet, markup, scripts, styles, data }) {
 	</html>`;
 }
 
-module.exports = Template;
+module.exports = template;
