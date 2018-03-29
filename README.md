@@ -1,15 +1,15 @@
-# react-ssr
+# React-SSR &middot; [![GitHub license](https://img.shields.io/github/license/carloluis/react-ssr.svg)](https://github.com/carloluis/react-ssr/blob/master/LICENSE)
 
 Base project for server side rendering with React v16.
 
 ## Stack
 
-* React
-* ReactDOM
-* ReactRouter
-* Webpack
-* Express
-* Helmet
+*   React
+*   ReactDOM
+*   ReactRouter
+*   Webpack
+*   Express
+*   Helmet
 
 ## Structure
 
@@ -32,3 +32,7 @@ yarn && yarn dev
 ```
 
 Then, open [localhost:3001](http://localhost:3001/)
+
+## License
+
+[MIT](LICENSE) © [Carloluis](https://github.com/carloluis)
